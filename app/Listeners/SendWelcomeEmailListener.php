@@ -24,7 +24,7 @@ class SendWelcomeEmailListener
     public function handle(SendWelcomeEmail $event)
     {
         $pubsub = new PubSubClient([
-            'projectId' => env('GOOGLE_PROJECT_ID'),
+            'projectId' => env('GOOGLE_CLOUD_PROJECT_ID'),
         ]);
 
         $subscriptionName = env('PUBSUB_SUBSCRIPTION_NAME');
