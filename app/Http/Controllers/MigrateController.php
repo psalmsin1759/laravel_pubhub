@@ -11,3 +11,5 @@ class MigrateController extends Controller
         Artisan::call('migrate');
     }
 }
+
+
