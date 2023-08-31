@@ -1,4 +1,4 @@
-name: Release  App
+name: Release Laravel App
 on:
   push:
     tags:
@@ -15,7 +15,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.1"
+          php-version: "7.4"
 
       - name: Install Composer Dependencies
         run: composer install --no-interaction --prefer-dist --no-suggest
@@ -30,6 +30,12 @@ jobs:
           php artisan view:cache
           zip -r release.zip .
 
+      - name: Upload Release Asset
+        uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: release.zip
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -38,7 +44,5 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          files: |
-            release.zip
           draft: false
           prerelease: false
