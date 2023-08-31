@@ -30,11 +30,22 @@ class SendWelcomeEmailListener
 
         $pubsub = $serviceB->pubsub();
 
+        $subscriptionName = env('PUBSUB_SUBSCRIPTION_NAME');
+        $subscription = $pubsub->subscription($subscriptionName);
+
+        $topicName = env('PUBSUB_TOPIC_NAME');
+        $topic = $pubsub->topic($topicName);
+
+        $message = [
+            'email' => $event->email,
+            'name' => $event->name,
+        ];
+        
+        // Publish the message to the Pub/Sub topic
+        $topic->publish(['data' => json_encode($message)]);
+
        
-       /*  $pubsub = new PubSubClient([
-            'projectId' => env('GOOGLE_CLOUD_PROJECT_ID'),
-        ]);
- */
+    /* 
         $subscriptionName = env('PUBSUB_SUBSCRIPTION_NAME');
 
         $subscription = $pubsub->subscription($subscriptionName);
@@ -42,6 +53,6 @@ class SendWelcomeEmailListener
             'email' => $event->email,
             'name' => $event->name,
         ];
-        $subscription->publish(['data' => json_encode($message)]);
+        $subscription->publish(['data' => json_encode($message)]); */
     }
 }
