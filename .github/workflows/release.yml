@@ -1,0 +1,44 @@
+name: Release  App
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+
+      - name: Install Composer Dependencies
+        run: composer install --no-interaction --prefer-dist --no-suggest
+
+      - name: Generate Application Key
+        run: php artisan key:generate
+
+      - name: Build and Package
+        run: |
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          zip -r release.zip .
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          files: |
+            release.zip
+          draft: false
+          prerelease: false
