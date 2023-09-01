@@ -108,3 +108,5 @@ php artisan make:listener SendWelcomeEmailListener --event=SendWelcomeEmail
 ```
 
 -   Test the user registration by making a POST request to /register with user data.
+
+-   Learn more about [Google Cloud Pub/Sub](https://cloud.google.com/pubsub) here.
