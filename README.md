@@ -42,8 +42,8 @@ curl -s "https://laravel.build/laravel-pubsub" | bash
 -   Grant permission to the service account to use this topic
 -   Create a subscription for that topic with a delivery type "Push" and specify the endpoint URL to be triggered.
 
-![Permission](/assets/images/permission.png)
-![Subscription](/assets/images/subscription.png)
+<img src="screenshots/permission.png" alt="Permission" />
+<img src="screenshots/subscription.png" alt="Subscription" />
 
 ## Step 3: Configure Laravel Environment
 
@@ -74,8 +74,8 @@ Route::post('/register', 'AuthenticationController@register');
 Route::post('/welcomeEmail', 'MailController@sendWelcomeEmail');
 ```
 
-![Email Controller](/assets/images/email.png)
-![Register Controller](/assets/images/register.png)
+<img src="screenshots/email.png" alt="Email Controller" />
+<img src="screenshots/register.png" alt="Register Controller" />
 
 ## Step 4: Create Event, Listener, and Service Provider
 
@@ -91,15 +91,15 @@ php artisan make:listener SendWelcomeEmailListener --event=SendWelcomeEmail
 
 -   Edit the SendWelcomeEmailListener listener in app/Listeners/SendWelcomeEmailListener.php:
 
-![Listener](/assets/images/listener.png)
+<img src="screenshots/listener.png" alt="Listener" />
 
 -   Map the event to the listener in /App/Providers/EventServiceProvider class
 
-![Map Listener](/assets/images/maplistener.png)
+<img src="screenshots/maplistener.png" alt="[Map Listener" />
 
 -   Edit the AuthenticationController (app/Http/Controllers/AuthenticationController.php) to include the event
 
-![Fire Event](/assets/images/fireevent.png)
+<img src="screenshots/fireevent.png" alt="Fire Event" />
 
 ## Step 5: Testing the Implementation
 
