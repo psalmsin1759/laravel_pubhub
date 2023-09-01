@@ -22,6 +22,7 @@ class AuthenticationController extends Controller
 
         $token = $user->createToken('mytoken')->plainTextToken;
 
+        // fire the send wecome email event
         event(new SendWelcomeEmail($user->email, $user->name));
 
         return response()->json([
