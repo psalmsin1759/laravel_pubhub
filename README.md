@@ -2,14 +2,6 @@
 
 **Subtitle:** A Step-by-Step Guide
 
-**Date:** 2023-08-31
-
-**Author:** Samson Ude
-
-**Categories:** Laravel, Google
-
-![Image](assets/img/blog/blog_1.jpg)
-
 ## Introduction
 
 In this tutorial, we'll explore how to implement a powerful background processing mechanism in Laravel using Google Cloud Pub/Sub. Pub/Sub, a publish-subscribe messaging service, serves as an invaluable tool when dealing with tasks that require asynchronous and scalable processing. We'll guide you through each step, illustrating how Laravel, coupled with Google Cloud Pub/Sub, can significantly enhance the performance and responsiveness of your applications.
@@ -39,3 +31,80 @@ Run the following command to create a new Laravel application using Sail:
 ```bash
 curl -s "https://laravel.build/laravel-pubsub" | bash
 ```
+
+## Step 2: Configure Google Cloud Pub/Sub
+
+-   Create a new project on Google Cloud Platform if you haven't already.
+-   Enable the Pub/Sub API for your project.
+-   Set up a service account and download the JSON key file.
+-   Copy the downloaded JSON key file to your Laravel project's root directory.
+-   Create a topic
+-   Grant permission to the service account to use this topic
+-   Create a subscription for that topic with a delivery type "Push" and specify the endpoint URL to be triggered.
+
+![Permission](/assets/images/permission.png)
+![Subscription](/assets/images/subscription.png)
+
+## Step 3: Configure Laravel Environment
+
+Edit the .env file in your project root and add the following lines to set up your Google Cloud Pub/Sub configuration:
+
+```bash
+GOOGLE_CLOUD_PROJECT_ID=your-google-product-id
+```
+
+```bash
+PUBSUB_TOPIC_NAME=your-topic-name
+```
+
+```bash
+PUBSUB_SUBSCRIPTION_NAME=your-subscription-name
+```
+
+## Step 4: Create the registration and send email endpoints
+
+-   define the endpoints in api.php
+-   Write the logic of the endpoint in the controller
+
+```bash
+Route::post('/register', 'AuthenticationController@register');
+```
+
+```bash
+Route::post('/welcomeEmail', 'MailController@sendWelcomeEmail');
+```
+
+![Email Controller](/assets/images/email.png)
+![Register Controller](/assets/images/register.png)
+
+## Step 4: Create Event, Listener, and Service Provider
+
+```bash
+php artisan make:event SendWelcomeEmail
+```
+
+-   Create Listener: Generate a listener that sends an email when the user registration event is fired:
+
+```bash
+php artisan make:listener SendWelcomeEmailListener --event=SendWelcomeEmail
+```
+
+-   Edit the SendWelcomeEmailListener listener in app/Listeners/SendWelcomeEmailListener.php:
+
+![Listener](/assets/images/listener.png)
+
+-   Map the event to the listener in /App/Providers/EventServiceProvider class
+
+![Map Listener](/assets/images/maplistener.png)
+
+-   Edit the AuthenticationController (app/Http/Controllers/AuthenticationController.php) to include the event
+
+![Fire Event](/assets/images/fireevent.png)
+
+## Step 5: Testing the Implementation
+
+```bash
+./vendor/bin/sail up
+```
+
+-   Test the user registration by making a POST request to /register with user data.
