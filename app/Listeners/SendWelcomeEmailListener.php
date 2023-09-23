@@ -45,14 +45,5 @@ class SendWelcomeEmailListener
         $topic->publish(['data' => json_encode($message)]);
 
        
-    /* 
-        $subscriptionName = env('PUBSUB_SUBSCRIPTION_NAME');
-
-        $subscription = $pubsub->subscription($subscriptionName);
-        $message = [
-            'email' => $event->email,
-            'name' => $event->name,
-        ];
-        $subscription->publish(['data' => json_encode($message)]); */
     }
 }

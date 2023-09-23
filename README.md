@@ -44,7 +44,7 @@ curl -s "https://laravel.build/laravel-pubsub" | bash
 
 <img src="screenshots/permission.png" alt="Permission" />
 <img src="screenshots/subscription.png" alt="Subscription" />
-
+                                    
 ## Step 3: Configure Laravel Environment
 
 Edit the .env file in your project root and add the following lines to set up your Google Cloud Pub/Sub configuration:
